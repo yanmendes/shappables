@@ -21,3 +21,8 @@ output "db_name" {
   value     = "${aws_db_instance.db.name}"
   sensitive = true
 }
+
+# output "es_endpoint" {
+#   value     = "${aws_elasticsearch_domain.es.endpoint}"
+#   sensitive = true
+# }

@@ -3,9 +3,10 @@ import e from 'express'
 import { validationResult } from 'express-validator'
 import { S3 } from 'aws-sdk'
 import { nanoid } from 'nanoid'
+import { Client } from '@elastic/elasticsearch'
 
 import { isInvalidImage } from './validator'
-import { imageBucket } from '../../config'
+import { imageBucket, esEndpoint, esIndex } from '../../config'
 import { Image } from '../../services/db'
 
 /**
@@ -29,37 +30,54 @@ export default (req, res) => {
   }
 
   const S3Client = new S3()
+  const esClient = new Client({ node: esEndpoint })
   const [, imageExtension] = req.files.image.mimetype.match(/image\/(\w+)/)
   const id = `${nanoid()}.${imageExtension}`
+  const image = {
+    id,
+    name: req.files.image.name,
+    description: req.body.description,
+    fileType: req.files.image.mimetype,
+    size: req.files.image.size
+  }
 
-  log.info('Uploading image to bucket...')
+  log.debug('Uploading image to bucket...')
   return S3Client.putObject({
     Body: req.files.image.data,
     Bucket: imageBucket,
     Key: id
   })
     .promise()
-    .then(() =>
-      Image.create({
-        id,
-        name: req.files.image.name,
-        description: req.body.description,
-        fileType: req.files.image.mimetype,
-        size: req.files.image.size
-      })
-    )
+    .then(() => log.debug('Persisting image info in DB...'))
+    .then(() => Image.create(image))
+    .then(() => log.debug('Persisting image info in ES...'))
+    .then(() => esClient.index({ id, index: esIndex, body: image }))
     .then(() => res.status(201).send())
-    .catch(async e => {
+    .catch(e => {
       log
         .child({ payload: req.body, stack: e.stack, error: e.message })
-        .error('Error while uploading the image... Deleting it.')
+        .error('Error while uploading the image... Rolling back resources.')
 
-      await S3Client.deleteObject({
+      log.debug('Deleting S3 Object')
+      return S3Client.deleteObject({
         Bucket: imageBucket,
         Key: id
       })
         .promise()
-        .catch(e => log.child({ stack: e.stack, error: e.message }).error('Error connecting to the bucket'))
+        .catch(e =>
+          log
+            .child({ stack: e.stack, error: e.message })
+            .error('Error connecting to the bucket')
+        )
+        .then(() => log.debug('Deleting database record'))
+        .then(() => Image.destroy({ where: { id } }))
+        .then(() => log.debug('Deleting index in ES'))
+        .then(() => esClient.delete({ index: esIndex, id }))
+        .catch(e =>
+          log
+            .child({ stack: e.stack, error: e.message })
+            .error('Error connecting to the Elastic Search cluster')
+        )
         .finally(() =>
           res.status(500).json({
             message: 'Something unexpected happened while uploading the image',

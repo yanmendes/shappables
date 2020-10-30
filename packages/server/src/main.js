@@ -20,6 +20,6 @@ const log = logger.child({ category })
         msg: e.message,
         stack: e.stack
       })
-      .error('Something went wrong while connecting to the broker...')
+      .error('Something went wrong while connecting to the database...')
   }
 })()

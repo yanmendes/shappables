@@ -11,10 +11,11 @@ const prettyPrint =
 export default require('pino')(
   {
     prettyPrint,
+    level: process.env.LOG_LEVEL || 'info',
     formatters: {
-      level: (label) => {
-        return { level: label };
-      },
+      level: label => {
+        return { level: label }
+      }
     }
   },
   destination

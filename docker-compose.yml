@@ -1,0 +1,41 @@
+version: '3'
+services:
+  server:
+    container_name: shappables-server
+    build: packages/server
+    environment:
+      DB_URI: $DB_URI
+      ES_ENDPOINT: $ES_ENDPOINT
+      AWS_PROFILE: $AWS_PROFILE
+      LOG_LEVEL: debug
+      HOME: "/home"
+    volumes:
+      - $HOME/.aws/credentials:/home/.aws/credentials:ro
+    networks:
+      - frontend
+      - elasticsearch
+    ports:
+      - 3000:3000
+    depends_on: [ elasticsearch ]
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
+    container_name: es01
+    environment:
+      - node.name=es01
+      - cluster.name=es-docker-cluster
+      - cluster.initial_master_nodes=es01
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      - elasticsearch
+    ports:
+      - 9200:9200
+
+networks:
+  frontend:
+  elasticsearch:

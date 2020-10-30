@@ -106,3 +106,76 @@ resource "aws_db_instance" "db" {
   skip_final_snapshot     = true
   tags                    = local.tags
 }
+
+# resource "aws_security_group" "es" {
+#   name   = "shappables-es-${local.workspace["environment"]}"
+#   vpc_id = data.aws_vpc.default-vpc.id
+
+#   ingress {
+#     description = "Elastic Search from current host"
+#     from_port   = 443
+#     to_port     = 443
+#     protocol    = "TCP"
+#     cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
+#   }
+
+#   egress {
+#     from_port   = 0
+#     to_port     = 0
+#     protocol    = "-1"
+#     cidr_blocks = ["0.0.0.0/0"]
+#   }
+# }
+
+# data "aws_subnet_ids" "selected" {
+#   vpc_id = data.aws_vpc.default-vpc.id
+# }
+
+# locals {
+#   subnet_ids_string = join(",", data.aws_subnet_ids.selected.ids)
+#   subnet_ids_list   = split(",", local.subnet_ids_string)
+# }
+
+# data "aws_region" "current" {}
+
+# data "aws_caller_identity" "current" {}
+
+# resource "aws_iam_service_linked_role" "es" {
+#   aws_service_name = "es.amazonaws.com"
+# }
+
+# resource "aws_elasticsearch_domain" "es" {
+#   domain_name           = "shappables"
+#   elasticsearch_version = "7.8"
+
+#   cluster_config {
+#     instance_type  = "t3.small.elasticsearch"
+#     instance_count = 1
+#   }
+
+#   ebs_options {
+#     ebs_enabled = true
+#     volume_size = 10
+#   }
+
+#   vpc_options {
+#     subnet_ids         = [local.subnet_ids_list[0]]
+#     security_group_ids = [aws_security_group.es.id]
+#   }
+
+#   access_policies = <<CONFIG
+# {
+#     "Version": "2012-10-17",
+#     "Statement": [
+#         {
+#             "Action": "es:*",
+#             "Principal": "*",
+#             "Effect": "Allow",
+#             "Resource": "arn:aws:es:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:*"
+#         }
+#     ]
+# }
+# CONFIG
+
+#   tags = local.tags
+# }

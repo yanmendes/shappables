@@ -20,7 +20,7 @@ DB_PASSWORD=$(terraform output db_password)
 DB_ENDPOINT=$(terraform output db_endpoint)
 DB_NAME=$(terraform output db_name)
 export DB_URI="mysql://${DB_USER}:${DB_PASSWORD}@${DB_ENDPOINT}/${DB_NAME}"
-printf $DB_URI
+export ES_ENDPOINT="http://es01:9200"
 cd -
 
 printf "
@@ -28,4 +28,9 @@ printf "
         ############## Installing dependencies ###############
         ######################################################\n\n"
 npm run bootstrap
-npm run start:prod
+
+printf "
+        ######################################################
+        ############## Starting services ###############
+        ######################################################\n\n"
+AWS_PROFILE=$1 docker-compose up server
