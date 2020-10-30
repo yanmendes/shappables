@@ -1,0 +1,7 @@
+node_modules
+.aws-sam/build
+.serverless
+.DS_Store
+tf-plan
+.terraform
+terraform.tfstate.d

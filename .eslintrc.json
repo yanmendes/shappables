@@ -1,0 +1,23 @@
+{
+  "env": {
+    "commonjs": true,
+    "es6": true,
+    "node": true,
+    "jest": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/errors",
+    "plugin:import/warnings"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "rules": {
+    "json/*": ["error", { "allowComments": true }],
+    "no-console": "error",
+    "eqeqeq": "error"
+  },
+  "plugins": ["markdown", "json", "jsdoc"]
+}

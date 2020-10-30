@@ -1,0 +1,32 @@
+{
+  "name": "shappables",
+  "version": "0.0.0",
+  "description": "Client and server for image upload + search service",
+  "scripts": {
+    "bootstrap": "npx lerna bootstrap -- --production --no-optional",
+    "start": "npx lerna exec -- npm start",
+    "start:prod": "NODE_ENV=prod npm start",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "pc:format-and-lint": "prettier-standard --staged --lint --fix"
+  },
+  "author": "Yan Mendes",
+  "license": "ISC",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "pre-commit": [
+    "pc:format-and-lint"
+  ],
+  "devDependencies": {
+    "eslint": "^6.1.0",
+    "eslint-config-standard": "^13.0.1",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-jsdoc": "^21.0.0",
+    "eslint-plugin-json": "^2.0.1",
+    "eslint-plugin-markdown": "^1.0.0",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.2.1",
+    "eslint-plugin-standard": "^4.0.0"
+  }
+}
