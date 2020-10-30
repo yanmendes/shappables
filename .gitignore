@@ -6,3 +6,4 @@ tf-plan
 .terraform
 terraform.tfstate.d
 terraform.tfstate
+coverage

@@ -1,43 +1,55 @@
 import request from 'supertest'
 
-import server from '../../../server'
-import invalidPayloadMock from './__mocks__/invalidPayload'
-import validPayloadMock from './__mocks__/validPayload'
-import invalidPayloadAssertion from './__assertions__/invalidPayload'
-import validPayloadAssertionDb from './__assertions__/validPayloadAssertionDb'
-import validPayloadAssertionPublisher from './__assertions__/validPayloadAssertionPublisher'
-
-jest.mock('../../../services/pubsub/publisher')
-jest.spyOn(publisher, 'publish')
+import server from '../../server'
 
 describe('test POST /upload', () => {
-  beforeAll(() => Client.create({ _id: validPayloadMock.clientId }))
+  jest.mock('aws-sdk', () => ({
+    S3: jest.fn(() => ({
+      putObject: jest.fn((_, cb) => cb(null, 'data')),
+      deleteObject: jest.fn()
+    }))
+  }))
 
-  afterAll(() =>
-    Promise.all([Client.deleteMany({}), Transaction.deleteMany({})])
-  )
+  afterEach(() => jest.clearAllMocks())
 
-  it('should return 400 for invalid payloads', () =>
+  it('should return 201 for valid payload', () =>
     request(server)
-      .post(`/transaction`)
-      .send(invalidPayloadMock)
+      .post(`/upload`)
+      .attach('image', Buffer.from('some data'), 'photo.png')
+      .field('description', 'foo')
+      .expect(201))
+
+  it('should return 400 for invalid image types', () =>
+    request(server)
+      .post(`/upload`)
+      .attach('image', Buffer.from('some data'), 'database.csv')
+      .field('description', 'foo')
       .expect(400)
-      .then(({ body }) => expect(body).toMatchObject(invalidPayloadAssertion)))
-
-  it('should persist the transaction, generate payable and return 200 for invalid payloads', () =>
-    request(server)
-      .post(`/transaction`)
-      .send(validPayloadMock)
-      .expect(201)
-      .then(() =>
-        Transaction.findOne({ clientId: validPayloadMock.clientId })
-          .then(t =>
-            expect(t.toObject()).toMatchObject(validPayloadAssertionDb)
-          )
-          .then(() =>
-            expect(publisher.publish).toHaveBeenCalledWith(
-              ...validPayloadAssertionPublisher
-            )
-          )
+      .then(({ body }) =>
+        expect(body).toMatchObject({
+          errors: [{ msg: 'Invalid image format' }]
+        })
       ))
+
+  it('should return 400 for blank description', () =>
+    request(server)
+      .post(`/upload`)
+      .attach('image', Buffer.from('some data'), 'photo.jpg')
+      .expect(400)
+      .then(({ body }) =>
+        expect(body).toMatchObject({
+          errors: [{ msg: 'Invalid value' }]
+        })
+      ))
+
+  it('should delete the image and return 500 if DB fails', () => {
+    // jest.mock('../../services/db/Image', () => ({
+    //   create: jest.fn(() => Promise.reject(Error))
+    // }))
+    // return request(server)
+    //   .post(`/upload`)
+    //   .attach('image', Buffer.from('some data'), 'photo.jpg')
+    //   .field('description', 'foo')
+    //   .expect(500)
+  })
 })
