@@ -45,7 +45,7 @@ export default (req, res) => {
         name: req.files.image.name,
         description: req.body.description,
         fileType: req.files.image.mimetype,
-        size: req.files.image.mimetype.size
+        size: req.files.image.size
       })
     )
     .then(() => res.status(201).send())
@@ -59,6 +59,7 @@ export default (req, res) => {
         Key: id
       })
         .promise()
+        .catch(e => log.child({ stack: e.stack, error: e.message }).error('Error connecting to the bucket'))
         .finally(() =>
           res.status(500).json({
             message: 'Something unexpected happened while uploading the image',
