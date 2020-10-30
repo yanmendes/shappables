@@ -19,3 +19,21 @@
 ```sh
   terraform destroy
 ```
+
+## Developing
+
+```sh
+  npm run dev
+```
+
+### :warning: You need to have a running instance of elasticsearch (docker-compose up elasticsearch)
+
+```sh
+  npm run test:watch
+```
+
+## Testing
+
+```sh
+  npm run test:cover
+```
