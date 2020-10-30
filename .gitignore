@@ -5,3 +5,4 @@ node_modules
 tf-plan
 .terraform
 terraform.tfstate.d
+terraform.tfstate
