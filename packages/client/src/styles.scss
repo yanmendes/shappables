@@ -1,4 +1,76 @@
-/* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/indigo-pink.css";
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+/* Application-wide Styles */
+h1 {
+  color: #6b2d6f;
+  font-family: 'Poppins', sans-serif;
+  font-size: 300%;
+}
+h2, h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: 150%;
+}
+body {
+  background: #fafafa;
+  margin: 2em;
+}
+/* everywhere else */
+* {
+  font-family: 'Montserrat', sans-serif;
+  color: #3e223e;
+}
+
+li {
+  list-style-type: none;
+}
+
+a {
+  color: #c3aac3;
+  text-decoration: none;
+}
+
+// Breakpoints
+$breakpoint-xxs: 340;
+$breakpoint-xs: 420;
+$breakpoint-sm: 576;
+$breakpoint-md: 768;
+$breakpoint-lg: 992;
+$breakpoint-xl: 1230;
+
+$media-xxs: #{$breakpoint-xxs}px;
+$media-xs: #{$breakpoint-xs}px;
+$media-sm: #{$breakpoint-sm}px;
+$media-md: #{$breakpoint-md}px;
+$media-lg: #{$breakpoint-lg}px;
+$media-xl: #{$breakpoint-xl}px;
+
+@mixin desktop-view {
+  @media screen and (min-width: $media-lg) {
+    @content;
+  }
+}
+
+@mixin tablet-view {
+  @media screen and (min-width: $media-md) and (max-width: calc(#{$media-lg} - 1px)) {
+    @content;
+  }
+}
+
+@mixin phone-view {
+  @media screen and (max-width: calc(#{$media-md} - 1px)) {
+    @content;
+  }
+}
+
+@mixin mobile-view {
+  @media screen and (max-width: calc(#{$media-lg} - 1px)) {
+    @content;
+  }
+}
+
+@mixin non-phone-view {
+  @media screen and (min-width: $media-md) {
+    @content;
+  }
+}
+

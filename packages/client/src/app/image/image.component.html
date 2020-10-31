@@ -1,0 +1,14 @@
+<div>
+  <mat-card class="card">
+    <mat-card-header>
+      <mat-card-title color="secondary" class='card-title'>{{ image.name }}</mat-card-title>
+    </mat-card-header>
+    <img mat-card-image src="{{ image.url }}" alt="{{ image.name }}">
+    <mat-card-content>
+      <p><b>Size:</b> <span> {{ (image.size / 1024).toFixed(2) }} KB </span></p>
+      <p><b>Type:</b> <span> {{ image.fileType }} </span></p>
+      <p class='description'>{{ image.description }}</p>
+    </mat-card-content>
+  </mat-card>
+</div>
+<div>
