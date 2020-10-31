@@ -5,6 +5,7 @@ import fileUpload from 'express-fileupload'
 
 import logger from './logger'
 import routes from './routes'
+import { maxFileSize } from './config'
 
 const app = express()
 app.use(bodyParser.json())
@@ -12,7 +13,7 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(pino({ logger }))
 app.use(fileUpload({
   limits: {
-    fileSize: 500 * 1024 // 500kb
+    fileSize: maxFileSize
   },
   abortOnLimit: true
 }));
