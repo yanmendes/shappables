@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 
-import { Image } from '../image'
+import { Image } from '../image';
+import { apiBaseUrl } from '../../config';
 
 @Component({
   selector: 'app-image-grid',
@@ -13,7 +14,7 @@ export class ImageGridComponent implements OnInit {
   images: [Image];
   constructor(private http: HttpClient) {
     this.http
-      .get('http://localhost:3000/search')
+      .get(`${apiBaseUrl}/search?fileType=image/png`)
       .subscribe((data: any) => (this.images = data?.images || []));
   }
 
