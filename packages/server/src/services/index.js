@@ -1,3 +1,4 @@
 import db from './db'
+import * as elasticsearch from './elasticsearch'
 
-export { db }
+export { db, elasticsearch }

@@ -31,22 +31,46 @@ export default (req, res) => {
       size: paginationSize + 1,
       body: {
         query: {
-          match_phrase: {
-            fileType,
-            size,
-            description
+          bool: {
+            ...(description
+              ? {
+                  must: [
+                    {
+                      match: {
+                        description: {
+                          query: description,
+                          fuzziness: 'AUTO'
+                        }
+                      }
+                    }
+                  ]
+                }
+              : {}),
+            filter: [
+              fileType && { term: { fileType } },
+              size && { range: { size: { gte: size * 0.9, lte: size * 1.1 } } }
+            ].filter(Boolean)
           }
         }
       }
     })
     .then(({ body }) => body.hits.hits)
+    .then((hits = []) =>
+      hits.map(({ _source }) => ({
+        description: _source.description,
+        fileType: _source.fileType,
+        name: _source.name,
+        size: _source.size,
+        url: _source.url
+      }))
+    )
     .then(hits => {
       if (!hits.length) {
         return res.status(204).send()
       } else if (hits.length <= paginationSize) {
-        return res.status(200).send({ docs: hits })
+        return res.status(200).send({ images: hits })
       }
-      return res.status(200).send({ docs: hits.slice(0, -1), hasMore: true })
+      return res.status(200).send({ images: hits.slice(0, -1), hasMore: true })
     })
     .catch(e => {
       log

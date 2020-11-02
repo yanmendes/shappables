@@ -15,8 +15,8 @@ describe('Test POST /upload', () => {
     it('should return 201 for valid payload', () =>
       request(server)
         .post(`/upload`)
-        .attach('image', Buffer.from('some data'), 'photo.png')
-        .field('description', 'foo')
+        .attach('image', Buffer.from('some data'), 'Test.png')
+        .field('description', 'Test')
         .expect(201))
   })
 

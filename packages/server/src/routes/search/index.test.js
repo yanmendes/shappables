@@ -9,30 +9,96 @@ describe('Test GET /search', () => {
   describe('Happy path', () => {
     it('should return 204 for empty results', () =>
       request(server)
-        .get(`/search?fileType=image/jpg`)
+        .get('/search?fileType=image/jpg')
         .send()
         .expect(204))
 
     const esClient = new Client({ node: esEndpoint })
-    it('should return 200 and hasMore for over 20 instances', () =>
+    it('should return 200 for description fuzzy search', () =>
       Promise.all(
         Array.from({ length: 21 })
           .map(() => nanoid())
           .map(id => ({
             id,
-            name: 'Test',
+            name: 'Test.png',
+            description: 'Test',
+            fileType: 'image/png'
+          }))
+          .map(({ id, ...image }) =>
+            esClient.index({ id, index: esIndex, body: image, refresh: true })
+          )
+      ).then(() =>
+        request(server)
+          .get('/search?description=Tst')
+          .send()
+          .expect(200)
+          .then(({ body: { images, hasMore } }) => {
+            expect(images.length).toBe(20)
+            expect(images[0]).toMatchObject({
+              name: 'Test.png',
+              description: 'Test',
+              fileType: 'image/png'
+            })
+            expect(hasMore).toBe(true)
+          })
+      ))
+
+    it('should return 200 and hasMore for type search with more than 20 instances', () =>
+      Promise.all(
+        Array.from({ length: 21 })
+          .map(() => nanoid())
+          .map(id => ({
+            id,
+            name: 'Test.png',
+            description: 'Test',
+            fileType: 'image/png'
+          }))
+          .map(({ id, ...image }) =>
+            esClient.index({ id, index: esIndex, body: image, refresh: true })
+          )
+      ).then(() =>
+        request(server)
+          .get('/search?fileType=image/png')
+          .send()
+          .expect(200)
+          .then(({ body: { images, hasMore } }) => {
+            expect(images.length).toBe(20)
+            expect(images[0]).toMatchObject({
+              name: 'Test.png',
+              description: 'Test',
+              fileType: 'image/png'
+            })
+            expect(hasMore).toBe(true)
+          })
+      ))
+
+    it('should return 200 for size searches with 10% size diff', () =>
+      Promise.all(
+        Array.from({ length: 21 })
+          .map(() => nanoid())
+          .map(id => ({
+            id,
+            name: 'Test.png',
             description: 'Test',
             fileType: 'image/png',
             size: 321
           }))
-          .map(({ id, ...image }) => esClient.index({ id, index: esIndex, body: image, refresh: true }))
+          .map(({ id, ...image }) =>
+            esClient.index({ id, index: esIndex, body: image, refresh: true })
+          )
       ).then(() =>
         request(server)
-          .get(`/search?fileType=image/png`)
+          .get('/search?size=340')
           .send()
           .expect(200)
-          .then(({ body: { docs, hasMore } }) => {
-            expect(docs.length).toBe(20)
+          .then(({ body: { images, hasMore } }) => {
+            expect(images.length).toBe(20)
+            expect(images[0]).toMatchObject({
+              name: 'Test.png',
+              description: 'Test',
+              fileType: 'image/png',
+              size: 321
+            })
             expect(hasMore).toBe(true)
           })
       ))
