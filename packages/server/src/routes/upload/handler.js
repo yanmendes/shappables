@@ -6,7 +6,7 @@ import { nanoid } from 'nanoid'
 import { Client } from '@elastic/elasticsearch'
 
 import { isInvalidImage } from './validator'
-import { imageBucket, esEndpoint, esIndex } from '../../config'
+import { imageBucket, imageBucketEndpoint, esEndpoint, esIndex } from '../../config'
 import { Image } from '../../services/db'
 
 /**
@@ -38,7 +38,8 @@ export default (req, res) => {
     name: req.files.image.name,
     description: req.body.description,
     fileType: req.files.image.mimetype,
-    size: req.files.image.size
+    size: req.files.image.size,
+    url: `${imageBucketEndpoint}/${id}`
   }
 
   log.debug('Uploading image to bucket...')

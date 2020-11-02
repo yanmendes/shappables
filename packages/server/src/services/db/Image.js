@@ -14,7 +14,8 @@ Image.init({
   name: DataTypes.STRING,
   description: DataTypes.TEXT,
   fileType: DataTypes.ENUM(validFileExtensions),
-  size: DataTypes.INTEGER
+  size: DataTypes.INTEGER,
+  url: DataTypes.STRING
 }, { sequelize, modelName: 'image' });
 
 export default Image
