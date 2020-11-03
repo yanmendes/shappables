@@ -3,7 +3,10 @@
   <mat-sidenav-container>
     <mat-sidenav-content #sidenav>
       <mat-tab-group (selectedTabChange)="onTabChanged($event);">
-        <mat-tab label="Image list"> <app-image-grid [images]="images"></app-image-grid> </mat-tab>
+        <mat-tab label="Image list">
+          <app-search-form (submitCallback)="searchForImages($event)"></app-search-form>
+          <app-image-grid [images]="images"></app-image-grid>
+        </mat-tab>
         <mat-tab label="Insert image"> <app-image-insert></app-image-insert> </mat-tab>
       </mat-tab-group>
     </mat-sidenav-content>

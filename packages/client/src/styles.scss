@@ -31,10 +31,19 @@ a {
   text-decoration: none;
 }
 
-label > * {
+mat-label, .mat-form-field-label > span {
   color: $secondary !important;
 }
 
 mat-form-field.full-width {
   width: 100%;
+}
+
+.submit-button {
+  background: $secondary;
+  color: $primary;
+}
+
+.mat-slider-thumb-label {
+  padding: 4px;
 }
