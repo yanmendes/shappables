@@ -1,4 +1,6 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
+@import "~ngx-toastr/toastr.css";
+@import "./globals.scss";
 
 /* Application-wide Styles */
 h1 {
@@ -11,13 +13,13 @@ h2, h3 {
   font-size: 150%;
 }
 body {
-  background: #fafafa;
+  background: $background;
   margin: 2em;
 }
 /* everywhere else */
 * {
   font-family: 'Montserrat', sans-serif;
-  color: #3e223e;
+  color: $primary;
 }
 
 li {
@@ -25,52 +27,14 @@ li {
 }
 
 a {
-  color: #c3aac3;
+  color: $secondary;
   text-decoration: none;
 }
 
-// Breakpoints
-$breakpoint-xxs: 340;
-$breakpoint-xs: 420;
-$breakpoint-sm: 576;
-$breakpoint-md: 768;
-$breakpoint-lg: 992;
-$breakpoint-xl: 1230;
-
-$media-xxs: #{$breakpoint-xxs}px;
-$media-xs: #{$breakpoint-xs}px;
-$media-sm: #{$breakpoint-sm}px;
-$media-md: #{$breakpoint-md}px;
-$media-lg: #{$breakpoint-lg}px;
-$media-xl: #{$breakpoint-xl}px;
-
-@mixin desktop-view {
-  @media screen and (min-width: $media-lg) {
-    @content;
-  }
+label > * {
+  color: $secondary !important;
 }
 
-@mixin tablet-view {
-  @media screen and (min-width: $media-md) and (max-width: calc(#{$media-lg} - 1px)) {
-    @content;
-  }
+mat-form-field.full-width {
+  width: 100%;
 }
-
-@mixin phone-view {
-  @media screen and (max-width: calc(#{$media-md} - 1px)) {
-    @content;
-  }
-}
-
-@mixin mobile-view {
-  @media screen and (max-width: calc(#{$media-lg} - 1px)) {
-    @content;
-  }
-}
-
-@mixin non-phone-view {
-  @media screen and (min-width: $media-md) {
-    @content;
-  }
-}
-

@@ -5,6 +5,11 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSidenavModule } from '@angular/material/sidenav';
 import { HttpClientModule } from '@angular/common/http';
 import { MatTabsModule } from '@angular/material/tabs';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatInputModule } from '@angular/material/input';
+import { MaterialFileInputModule } from 'ngx-material-file-input';
+import { MatIconModule } from '@angular/material/icon';
+import { ToastrModule } from 'ngx-toastr';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -28,7 +33,13 @@ import { ImageInsertComponent } from './image-insert/image-insert.component';
     MatSidenavModule,
     MatGridListModule,
     MatTabsModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatInputModule,
+    MaterialFileInputModule,
+    MatIconModule,
+    ToastrModule.forRoot()
   ],
   providers: [],
   bootstrap: [AppComponent],

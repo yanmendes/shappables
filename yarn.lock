@@ -241,13 +241,6 @@
   dependencies:
     tslib "^2.0.0"
 
-"@angular/router@~10.2.0":
-  version "10.2.1"
-  resolved "https://registry.yarnpkg.com/@angular/router/-/router-10.2.1.tgz#c3204c2a20aac871c415118908179431319dac91"
-  integrity sha512-w2iS/gq4dcPd4cPGgd7HGEANg5BfE+fg0cI81ah7e79OatDP+Y1atxmNXyF50gCxl8x6WDnUiNu8nfjTebgRAw==
-  dependencies:
-    tslib "^2.0.0"
-
 "@babel/code-frame@^7.0.0", "@babel/code-frame@^7.10.4":
   version "7.10.4"
   resolved "https://registry.yarnpkg.com/@babel/code-frame/-/code-frame-7.10.4.tgz#168da1a36e90da68ae8d49c0f1b48c7c6249213a"
@@ -1397,11 +1390,6 @@
   integrity sha512-Uv6h1sT+0DrblvIrolFtbvM1FgWm+/sy4B3pvLp67Zys+thcukzS5ekn7HsZFGpWP4Q3fYJCljbWQE/XivMRLw==
   dependencies:
     mkdirp "^1.0.4"
-
-"@scarf/scarf@^1.1.0":
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/@scarf/scarf/-/scarf-1.1.0.tgz#b84b4a91cd938a688d36245b7a7db6fbc476a499"
-  integrity sha512-b2iE8kjjzzUo2WZ0xuE2N77kfnTds7ClrDxcz3Atz7h2XrNVoAPUoT75i7CY0st5x++70V91Y+c6RpBX9MX7Jg==
 
 "@schematics/angular@10.2.0":
   version "10.2.0"
@@ -7799,13 +7787,17 @@ next-tick@~1.0.0:
   resolved "https://registry.yarnpkg.com/next-tick/-/next-tick-1.0.0.tgz#ca86d1fe8828169b0120208e3dc8424b9db8342c"
   integrity sha1-yobR/ogoFpsBICCOPchCS524NCw=
 
-ngx-infinite-scroll@^9.1.0:
-  version "9.1.0"
-  resolved "https://registry.yarnpkg.com/ngx-infinite-scroll/-/ngx-infinite-scroll-9.1.0.tgz#6716a47613ff59f236b85c3ce291b2fd57106824"
-  integrity sha512-ZulbahgFsoPmP8cz7qPGDeFX9nKiSm74aav8vXNSI1ZoPiGYY5FQd8AK+yXqygY7tyCJRyt8Wp3DIg7zgP5dPA==
+ngx-material-file-input@^2.1.1:
+  version "2.1.1"
+  resolved "https://registry.yarnpkg.com/ngx-material-file-input/-/ngx-material-file-input-2.1.1.tgz#8f3dffc9bfcc1e2e07a00c9cf168d901ecb0cd30"
+  integrity sha512-FbaIjiJnL6BZtZYWLvMSn9aSaM62AZaJegloTUphmLz5jopXPzE5W+3aC+dsf9h1IIqHSCLcyv0w+qH0ypBhMA==
+
+ngx-toastr@^13.1.0:
+  version "13.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-toastr/-/ngx-toastr-13.1.0.tgz#1ab4c03b1042ca51c41b8e2722d6f9056a7b0582"
+  integrity sha512-TS4rIfg/oPmmjKadsXLSNIN/A9LktcYPZayGhqLpzcjMud7XLLubLqbrmnH34UakMrUq6QCXXYYiU0QTMW5Qhw==
   dependencies:
-    "@scarf/scarf" "^1.1.0"
-    opencollective-postinstall "^2.0.2"
+    tslib "^2.0.0"
 
 nice-try@^1.0.4:
   version "1.0.5"
@@ -8272,11 +8264,6 @@ open@7.2.0:
   dependencies:
     is-docker "^2.0.0"
     is-wsl "^2.1.1"
-
-opencollective-postinstall@^2.0.2:
-  version "2.0.3"
-  resolved "https://registry.yarnpkg.com/opencollective-postinstall/-/opencollective-postinstall-2.0.3.tgz#7a0fff978f6dbfa4d006238fbac98ed4198c3259"
-  integrity sha512-8AV/sCtuzUeTo8gQK5qDZzARrulB3egtLzFgteqB2tcT4Mw7B8Kt7JcDHmltjz6FOAHsvTevk70gZEbhM4ZS9Q==
 
 opn@^5.5.0:
   version "5.5.0"

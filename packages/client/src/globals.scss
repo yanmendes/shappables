@@ -1,0 +1,48 @@
+$primary: #3e223e;
+$secondary: #c3aac3;
+$background: #fafafa;
+
+// Breakpoints
+$breakpoint-xxs: 340;
+$breakpoint-xs: 420;
+$breakpoint-sm: 576;
+$breakpoint-md: 768;
+$breakpoint-lg: 992;
+$breakpoint-xl: 1230;
+
+$media-xxs: #{$breakpoint-xxs}px;
+$media-xs: #{$breakpoint-xs}px;
+$media-sm: #{$breakpoint-sm}px;
+$media-md: #{$breakpoint-md}px;
+$media-lg: #{$breakpoint-lg}px;
+$media-xl: #{$breakpoint-xl}px;
+
+@mixin desktop-view {
+  @media screen and (min-width: $media-lg) {
+    @content;
+  }
+}
+
+@mixin tablet-view {
+  @media screen and (min-width: $media-md) and (max-width: calc(#{$media-lg} - 1px)) {
+    @content;
+  }
+}
+
+@mixin phone-view {
+  @media screen and (max-width: calc(#{$media-md} - 1px)) {
+    @content;
+  }
+}
+
+@mixin mobile-view {
+  @media screen and (max-width: calc(#{$media-lg} - 1px)) {
+    @content;
+  }
+}
+
+@mixin non-phone-view {
+  @media screen and (min-width: $media-md) {
+    @content;
+  }
+}
