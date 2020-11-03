@@ -1,8 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, OnInit, Input } from '@angular/core';
 
 import { Image } from '../image';
-import { apiBaseUrl } from '../../config';
 
 @Component({
   selector: 'app-image-grid',
@@ -11,12 +9,7 @@ import { apiBaseUrl } from '../../config';
 })
 export class ImageGridComponent implements OnInit {
   breakpoint: number;
-  images: [Image];
-  constructor(private http: HttpClient) {
-    this.http
-      .get(`${apiBaseUrl}/search?fileType=image/png`)
-      .subscribe((data: any) => (this.images = data?.images || []));
-  }
+  @Input() images: [Image];
 
   getCols(width: number): number {
     return width <= 576 ? 1 : width <= 768 ? 2 : width <= 1230 ? 3 : 4;
