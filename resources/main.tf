@@ -77,16 +77,14 @@ resource "aws_security_group" "db" {
   tags                  = local.tags
 }
 
-resource "random_password" "username" {
+resource "random_string" "username" {
   length = 16
-  special = true
-  override_special = "_%@"
+  special = false
 }
 
-resource "random_password" "password" {
+resource "random_string" "password" {
   length = 16
-  special = true
-  override_special = "_%@"
+  special = false
 }
 
 resource "aws_db_instance" "db" {
@@ -97,8 +95,8 @@ resource "aws_db_instance" "db" {
   instance_class          = "db.t2.micro"
   name                    = "shappables"
   parameter_group_name    = "default.mysql5.7"
-  username                = random_password.username.result
-  password                = random_password.password.result
+  username                = random_string.username.result
+  password                = random_string.password.result
 
   vpc_security_group_ids  = [aws_security_group.db.id]
   publicly_accessible     = true

@@ -9,7 +9,7 @@ const log = logger.child({ category })
 ;(async () => {
   try {
     logger.debug('Connecting to the database...')
-    await db.sync()
+    await db.sync({ force: true })
     logger.debug('Bootstrapping elasticsearch...')
     await elasticsearch.init()
     app.listen({ port }, () =>

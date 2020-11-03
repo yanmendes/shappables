@@ -5,7 +5,8 @@
 ## Requirements
 
 - This project's infrastructure is maintained with Terraform. To install it, [follow the guide for your OS](https://learn.hashicorp.com/tutorials/terraform/install-cli#install-terraform).
-- Node.js
+- Docker
+- Docker-compose
 
 
 ## Creating the stack

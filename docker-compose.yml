@@ -5,10 +5,10 @@ services:
     build: packages/server
     environment:
       DB_URI: $DB_URI
-      ES_ENDPOINT: $ES_ENDPOINT
+      ES_ENDPOINT: http://es01:9200
       AWS_PROFILE: $AWS_PROFILE
-      LOG_LEVEL: debug
       HOME: "/home"
+    command: ["./wait-for-it.sh", "es01:9200", "--", "npm", "run", "start:prod"]
     volumes:
       - $HOME/.aws/credentials:/home/.aws/credentials:ro
     networks:
@@ -17,6 +17,15 @@ services:
     ports:
       - 3000:3000
     depends_on: [ elasticsearch ]
+
+  client:
+    container_name: shappables-client
+    build: packages/client
+    networks:
+      - frontend
+    ports:
+      - 80:80
+    depends_on: [ server ]
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.9.3
