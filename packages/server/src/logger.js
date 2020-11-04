@@ -4,7 +4,7 @@ const destination =
     : process.stdout
 
 const prettyPrint =
-  process.env.NODE_ENV === 'production'
+  process.env.NODE_ENV === 'prod'
     ? false
     : { levelFirst: true, colorize: true, translateTime: true }
 
