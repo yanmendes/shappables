@@ -47,7 +47,7 @@ export class AppComponent implements OnInit {
   }
 
   onTabChanged(event: MatTabChangeEvent): void {
-    if (event.index === 0) {
+    if (event.index === 1) {
       this.searchForImages();
     }
   }
