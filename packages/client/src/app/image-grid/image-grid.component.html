@@ -1,6 +1,10 @@
 <div>
   <div *ngIf="images?.length">
-    <mat-grid-list [cols]="breakpoint" [rowHeight]="500" (window:resize)="onResize($event)">
+    <mat-grid-list
+      [cols]="breakpoint"
+      [rowHeight]="500"
+      (window:resize)="onResize($event)"
+    >
       <ul>
         <li *ngFor="let image of images">
           <mat-grid-tile><app-image [image]="image"></app-image></mat-grid-tile>
@@ -9,8 +13,12 @@
     </mat-grid-list>
   </div>
   <div *ngIf="!images?.length" class="no-results">
-    <img class='no-results-image' src='assets/img/not-found.svg' alt='No results found' />
-    <h3 class='no-results-title'>Oops, no results found =(</h3>
+    <img
+      class="no-results-image"
+      src="assets/img/not-found.svg"
+      alt="No results found"
+    />
+    <h3 class="no-results-title">Oops, no results found =(</h3>
     <p>Try another search</p>
   </div>
 </div>

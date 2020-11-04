@@ -1,17 +1,26 @@
 <h1>{{title}}</h1>
-<div class='content-wrapper'>
+<div class="content-wrapper">
   <mat-sidenav-container>
     <mat-sidenav-content #sidenav>
       <mat-tab-group>
-        <mat-tab label="Insert image"> <app-image-insert (submitCallback)="searchForImages($event)"></app-image-insert> </mat-tab>
+        <mat-tab label="Insert image">
+          <app-image-insert
+            (submitCallback)="searchForImages($event)"
+          ></app-image-insert>
+        </mat-tab>
         <mat-tab label="Image list">
-          <app-search-form (submitCallback)="searchForImages($event)"></app-search-form>
-          <app-image-grid [images]="images"></app-image-grid>
+          <app-search-form
+            (submitCallback)="searchForImages($event)"
+          ></app-search-form>
+          <app-image-grid
+            (submitCallback)="searchForImages($event)"
+            [images]="images"
+          ></app-image-grid>
         </mat-tab>
       </mat-tab-group>
     </mat-sidenav-content>
   </mat-sidenav-container>
 </div>
-<footer class='footer'>
+<footer class="footer">
   <a href="https://stories.freepik.com/web">Illustration by Freepik Stories</a>
 </footer>
