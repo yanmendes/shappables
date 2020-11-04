@@ -1,6 +1,5 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { MatTabChangeEvent } from '@angular/material/tabs';
 import * as qs from 'querystring';
 
 import { Image, SearchParams } from './interfaces';
@@ -44,11 +43,5 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.searchForImages();
-  }
-
-  onTabChanged(event: MatTabChangeEvent): void {
-    if (event.index === 1) {
-      this.searchForImages();
-    }
   }
 }

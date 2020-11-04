@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
 import { ToastrService } from 'ngx-toastr';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { maxFileSize, apiBaseUrl } from '../../config';
+import { SearchParams } from '../interfaces'
 
 @Component({
   selector: 'app-image-insert',
@@ -12,6 +13,7 @@ import { maxFileSize, apiBaseUrl } from '../../config';
 })
 export class ImageInsertComponent implements OnInit {
   imageUploadForm;
+  @Output() submitCallback: EventEmitter<SearchParams> = new EventEmitter();
   constructor(
     private formBuilder: FormBuilder,
     private toastr: ToastrService,
@@ -49,6 +51,7 @@ export class ImageInsertComponent implements OnInit {
       await this.http.post(`${apiBaseUrl}/upload`, formData, { headers })
           .toPromise()
           .then(() => this.toastr.success('Image uploaded successfully'))
+          .then(() => this.submitCallback.emit())
           .catch(error => this.toastr.error(`Error while uploading: ${error.message}`));
     } else {
       this.toastr.error('Invalid input.');
