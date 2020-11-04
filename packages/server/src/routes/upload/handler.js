@@ -52,7 +52,7 @@ export default (req, res) => {
     .then(() => log.debug('Persisting image info in DB...'))
     .then(() => Image.create(image))
     .then(() => log.debug('Persisting image info in ES...'))
-    .then(() => esClient.index({ id, index: esIndex, body: image }))
+    .then(() => esClient.index({ id, index: esIndex, body: image, refresh: true }))
     .then(() => res.status(201).send())
     .catch(e => {
       log
