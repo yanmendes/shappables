@@ -8,8 +8,8 @@
   "scripts": {
     "start": "node src",
     "start:prod": "NODE_ENV=prod node src",
-    "dev": "docker-compose up -d elasticsearch && ./wait-for-it.sh localhost:9200 -- nodemon src",
-    "test": "docker-compose up -d elasticsearch && ./wait-for-it.sh localhost:9200 -- jest",
+    "dev": "./wait-for-it.sh localhost:9200 -- nodemon src",
+    "test": "./wait-for-it.sh localhost:9200 -- jest",
     "test:watch": "npm run test -- --watch",
     "test:cover": "npm run test -- --coverage"
   },

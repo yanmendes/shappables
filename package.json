@@ -6,11 +6,12 @@
     "bootstrap": "npx lerna bootstrap",
     "bootstrap:prod": "npx lerna bootstrap -- --production --no-optional",
     "start": "npx lerna exec -- npm start",
-    "dev": "npx lerna exec -- npm run dev",
+    "dev": "npm run es-start && npx lerna exec -- npm run dev",
     "start:prod": "NODE_ENV=prod npm start",
     "test": "npx lerna exec -- npm test",
     "test:cover": "npx lerna exec -- npm run test:cover",
-    "pc:format-and-lint": "prettier-standard --staged --lint --fix"
+    "pc:format-and-lint": "prettier-standard --staged --lint --fix",
+    "es-start": "docker-compose up -d elasticsearch"
   },
   "author": "Yan Mendes",
   "license": "ISC",
