@@ -3,10 +3,13 @@
   "version": "0.0.0",
   "description": "Client and server for image upload + search service",
   "scripts": {
-    "bootstrap": "npx lerna bootstrap -- --production --no-optional",
+    "bootstrap": "npx lerna bootstrap",
+    "bootstrap:prod": "npx lerna bootstrap -- --production --no-optional",
     "start": "npx lerna exec -- npm start",
+    "dev": "npx lerna exec -- npm run dev",
     "start:prod": "NODE_ENV=prod npm start",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "npx lerna exec -- npm test",
+    "test:cover": "npx lerna exec -- npm run test:cover",
     "pc:format-and-lint": "prettier-standard --staged --lint --fix"
   },
   "author": "Yan Mendes",
