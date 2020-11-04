@@ -1,6 +1,5 @@
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder } from '@angular/forms';
-import { HttpClient } from '@angular/common/http';
 
 import { fileType, SearchParams } from '../interfaces';
 
@@ -15,8 +14,7 @@ export class SearchFormComponent implements OnInit {
   fileTypes = Object.values(fileType);
 
   constructor(
-    private formBuilder: FormBuilder,
-    private http: HttpClient
+    private formBuilder: FormBuilder
   ) {
     this.searchParamsForm = this.formBuilder.group({
       description: null,
