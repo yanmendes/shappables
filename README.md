@@ -1,7 +1,6 @@
 # shappables
 
 [![lerna](https://img.shields.io/badge/maintained%20with-lerna-cc00ff.svg)](https://lerna.js.org/)
-[![codecov](https://codecov.io/gh/yanmendes/shappables/branch/master/graph/badge.svg)](https://codecov.io/gh/yanmendes/shappables)
 
 ## Requirements
 
@@ -9,7 +8,7 @@
 - Docker
 - Docker-compose
 
-## Creating the stack
+## Running
 
 ```sh
   chmod +x start.sh && ./start.sh
@@ -22,6 +21,8 @@ This script:
 - Creates a elasticsearch cluster **[TODO]**
 - Spawns a elasticsearch instance via docker-compose
 - Builds and starts a production instance of both the `client` and `server`
+
+Navigate to [http://localhost](http://localhost)
 
 ## Deleting the stack
 
