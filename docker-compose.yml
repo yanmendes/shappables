@@ -8,6 +8,7 @@ services:
       ES_ENDPOINT: http://es01:9200
       AWS_PROFILE: $AWS_PROFILE
       HOME: "/home"
+      WAITFORIT_TIMEOUT: 60
     command: ["./wait-for-it.sh", "es01:9200", "--", "npm", "run", "start:prod"]
     volumes:
       - $HOME/.aws/credentials:/home/.aws/credentials:ro
