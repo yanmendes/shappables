@@ -36,3 +36,14 @@
   margin-left: 8px;
 }
 
+.anchor {
+  position: relative;
+}
+
+.helper-text {
+  position: absolute;
+  left: 0;
+  bottom: -18px;
+  font-family: 'Poppins', sans-serif;
+  font-size: 14px;
+}
