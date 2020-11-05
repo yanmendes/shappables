@@ -5,12 +5,12 @@
       <mat-tab-group>
         <mat-tab label="Insert image">
           <app-image-insert
-            (submitCallback)="searchForImages($event)"
+            (submitCallback)="searchForImages($event, { force: true, resetImages: true })"
           ></app-image-insert>
         </mat-tab>
         <mat-tab label="Image list">
           <app-search-form
-            (submitCallback)="searchForImages($event, true)"
+            (submitCallback)="searchForImages($event, { force: true, resetImages: true })"
           ></app-search-form>
           <app-image-grid
             (infiniteScrollCallback)="searchForImages($event)"

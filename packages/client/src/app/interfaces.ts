@@ -26,3 +26,8 @@ export interface GET_Search {
   images: Image[];
   hasMore?: boolean;
 }
+
+export interface Options {
+  force?: boolean;
+  resetImages?: boolean;
+}

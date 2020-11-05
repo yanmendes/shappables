@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as qs from 'querystring';
 
-import { Image, SearchParams, GET_Search } from './interfaces';
+import { Image, SearchParams, GET_Search, Options } from './interfaces';
 import { apiBaseUrl } from '../config';
 
 @Component({
@@ -21,8 +21,8 @@ export class AppComponent implements OnInit {
     size: null
   };
 
-  searchForImages(params?: SearchParams, userTriggeredSearch?: boolean): void {
-    if(userTriggeredSearch || this.hasMore) {
+  searchForImages(params?: SearchParams, opts?: Options): void {
+    if(opts?.force || this.hasMore) {
       this.loadingSearch = true;
       const removeFalsy = (obj: object) => {
         const newObj = {};
@@ -36,7 +36,7 @@ export class AppComponent implements OnInit {
       if (params) {
         this.searchParams = { ...this.searchParams, ...params };
       }
-      if (userTriggeredSearch) {
+      if (opts?.resetImages) {
         this.images = [];
       }
 
