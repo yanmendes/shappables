@@ -53,7 +53,7 @@ export class AppComponent implements OnInit {
             ];
             this.hasMore = data?.hasMore;
           }).finally(() => this.loadingSearch = false)
-      , 1000)
+      , 2000)
     }
   }
 
