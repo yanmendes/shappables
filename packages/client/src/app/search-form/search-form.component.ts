@@ -25,7 +25,7 @@ export class SearchFormComponent implements OnInit {
 
   ngOnInit(): void {}
 
-  onSubmit(v): void {
+  onSubmit(v: SearchParams): void {
     this.submitCallback.emit({
       description: v.description,
       fileType: v.fileType !== 'all' && v.fileType,

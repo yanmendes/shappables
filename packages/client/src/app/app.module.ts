@@ -13,6 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { ToastrModule } from 'ngx-toastr';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSliderModule } from '@angular/material/slider';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -47,7 +48,8 @@ import { SearchFormComponent } from './search-form/search-form.component';
     MatIconModule,
     ToastrModule.forRoot(),
     MatRadioModule,
-    MatSliderModule
+    MatSliderModule,
+    InfiniteScrollModule
   ],
   providers: [],
   bootstrap: [AppComponent],

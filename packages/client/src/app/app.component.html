@@ -10,11 +10,12 @@
         </mat-tab>
         <mat-tab label="Image list">
           <app-search-form
-            (submitCallback)="searchForImages($event)"
+            (submitCallback)="searchForImages($event, true)"
           ></app-search-form>
           <app-image-grid
-            (submitCallback)="searchForImages($event)"
+            (infiniteScrollCallback)="searchForImages($event)"
             [images]="images"
+            [loadingSearch]="loadingSearch"
           ></app-image-grid>
         </mat-tab>
       </mat-tab-group>

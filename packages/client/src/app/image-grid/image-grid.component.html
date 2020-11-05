@@ -1,5 +1,11 @@
 <div>
-  <div *ngIf="images?.length">
+  <div
+    *ngIf="images?.length"
+    infiniteScroll
+    [infiniteScrollDistance]="2"
+    [infiniteScrollThrottle]="150"
+    (scrolled)="onScroll()"
+  >
     <mat-grid-list
       [cols]="breakpoint"
       [rowHeight]="500"
@@ -12,9 +18,17 @@
       </ul>
     </mat-grid-list>
   </div>
-  <div *ngIf="!images?.length" class="no-results">
+  <div *ngIf="loadingSearch" class="centered">
     <img
-      class="no-results-image"
+      class="illustration"
+      src="assets/img/loading.gif"
+      alt="Loading"
+      id="image-grid__loading-gif"
+    />
+  </div>
+  <div *ngIf="!loadingSearch && !images?.length" class="centered">
+    <img
+      class="illustration"
       src="assets/img/not-found.svg"
       alt="No results found"
     />

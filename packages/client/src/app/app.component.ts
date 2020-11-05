@@ -1,8 +1,8 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import * as qs from 'querystring';
 
-import { Image, SearchParams } from './interfaces';
+import { Image, SearchParams, GET_Search } from './interfaces';
 import { apiBaseUrl } from '../config';
 
 @Component({
@@ -11,35 +11,53 @@ import { apiBaseUrl } from '../config';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
+  hasMore: boolean = true;
   title = 'shappables';
-  images: [Image] | [];
+  images: Image[] = [];
+  loadingSearch: boolean = false;
   searchParams: SearchParams = {
     description: null,
     fileType: null,
     size: null
   };
 
-  searchForImages(params?: SearchParams): void {
-    const removeFalsy = (obj: object) => {
-      const newObj = {};
-      Object.keys(obj).forEach(prop => {
-        if (obj[prop]) {
-          newObj[prop] = obj[prop];
-        }
-      });
-      return newObj;
-    };
-    this.images = [];
-    if (params) {
-      this.searchParams = params;
-    }
+  searchForImages(params?: SearchParams, userTriggeredSearch?: boolean): void {
+    if(userTriggeredSearch || this.hasMore) {
+      this.loadingSearch = true;
+      const removeFalsy = (obj: object) => {
+        const newObj = {};
+        Object.keys(obj).forEach(prop => {
+          if (obj[prop]) {
+            newObj[prop] = obj[prop];
+          }
+        });
+        return newObj;
+      };
+      if (params) {
+        this.searchParams = { ...this.searchParams, ...params };
+      }
+      if (userTriggeredSearch) {
+        this.images = [];
+      }
 
-    this.http
-      .get(`${apiBaseUrl}/search?${qs.stringify(removeFalsy(this.searchParams))}`)
-      .subscribe((data: any) => ((this.images = data?.images || []), this.ref.detectChanges()));
+      const promise = this.http
+        .get(`${apiBaseUrl}/search?${qs.stringify(removeFalsy(this.searchParams))}`)
+        .toPromise()
+
+      setTimeout(() =>
+        promise
+          .then((data: GET_Search) => {
+            this.images = [
+              ...this.images,
+              ...(data?.images || [])
+            ];
+            this.hasMore = data?.hasMore;
+          }).finally(() => this.loadingSearch = false)
+      , 1000)
+    }
   }
 
-  constructor(private http: HttpClient, private ref: ChangeDetectorRef) {}
+  constructor(private http: HttpClient) {}
 
   ngOnInit(): void {
     this.searchForImages();
