@@ -1,5 +1,4 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { FormBuilder } from '@angular/forms';
+import { Component, Output, EventEmitter } from '@angular/core';
 
 import { fileType, SearchParams } from '../interfaces';
 
@@ -8,28 +7,22 @@ import { fileType, SearchParams } from '../interfaces';
   templateUrl: './search-form.component.html',
   styleUrls: ['./search-form.component.scss']
 })
-export class SearchFormComponent implements OnInit {
+export class SearchFormComponent {
   @Output() submitCallback: EventEmitter<SearchParams> = new EventEmitter();
   searchParamsForm;
+  description: string;
+  sizeFilterEnabled: boolean = false;
+  fileType: fileType = fileType.all;
+  size: number = 50;
   fileTypes = Object.values(fileType);
 
-  constructor(
-    private formBuilder: FormBuilder
-  ) {
-    this.searchParamsForm = this.formBuilder.group({
-      description: null,
-      size: 50,
-      fileType: ['all']
-    });
-  }
+  constructor() {}
 
-  ngOnInit(): void {}
-
-  onSubmit(v: SearchParams): void {
+  onSubmit(): void {
     this.submitCallback.emit({
-      description: v.description,
-      fileType: v.fileType !== 'all' && v.fileType,
-      size: v.size * 1024
+      description: this.description,
+      fileType: this.fileType !== 'all' && this.fileType,
+      size: this.sizeFilterEnabled && this.size * 1024
     });
   }
 }

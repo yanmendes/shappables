@@ -1,17 +1,19 @@
-<form
-  [formGroup]="searchParamsForm"
-  (ngSubmit)="onSubmit(searchParamsForm.value)"
-  class="form-wrapper"
->
+<form (ngSubmit)="onSubmit()" class="form-wrapper">
   <div>
     <mat-form-field>
       <mat-label>Description</mat-label>
-      <input class="input" formControlName="description" matInput type="text" />
+      <input
+        name="description"
+        class="input"
+        [(ngModel)]="description"
+        matInput
+        type="text"
+      />
     </mat-form-field>
   </div>
   <div class="file-types-wrapper">
     <mat-label>File type</mat-label>
-    <mat-radio-group matInput formControlName="fileType">
+    <mat-radio-group matInput name="fileType" [(ngModel)]="fileType">
       <mat-radio-button
         class="radio-button"
         *ngFor="let fileType of fileTypes"
@@ -23,14 +25,22 @@
   </div>
   <div>
     <mat-label>File size (KB)</mat-label>
+    <mat-checkbox
+      class="checkbox"
+      matInput
+      name="sizeFilterEnabled"
+      [(ngModel)]="sizeFilterEnabled"
+    ></mat-checkbox>
     <mat-slider
       class="slider"
-      formControlName="size"
+      name="size"
+      [(ngModel)]="size"
       min="1"
       max="500"
       step="0.5"
       showTicks="true"
       thumbLabel="true"
+      [disabled]="!sizeFilterEnabled"
     ></mat-slider>
   </div>
   <div>
